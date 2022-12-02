@@ -2,7 +2,7 @@
 
 void bubbleSort(int *vector, int length){
     int aux;
-    for(int i = 0; i < length - 1; i++){
+    for(int i = length - 1; i >= 1; i--){
         for(int j = 0; j < length - 1; j++){
             if (vector[j] > vector[j+1]){
                 aux = vector[j];
