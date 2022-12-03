@@ -9,14 +9,16 @@ void selectionSort(int *vector, int length){
                 minimumPosition = j;
             }
         }
-        aux = vector[i];
-        vector[i] = vector[minimumPosition];
-        vector[minimumPosition] = aux;
+        if(minimumPosition != i) {
+            aux = vector[i];
+            vector[i] = vector[minimumPosition];
+            vector[minimumPosition] = aux;
+        }   
     }
 }
 
 int main(){
-    int v[10] = {5, 8, 9, 4, 10, 2, 3, 7, 6, 1};
+    int v[10] = {1, 8, 9, 4, 10, 2, 3, 7, 6, 1};
     
     // vetor inicial
     for(int i = 0; i < 10; i++){
