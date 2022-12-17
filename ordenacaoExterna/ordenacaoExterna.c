@@ -1,4 +1,3 @@
-// simple external sorting
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -48,12 +47,14 @@ void externalSort(char *filename, int n) {
     fp = fopen(filename, "r");
     cantOpenFile(fp, filename);
 
+    /// aloca memoria para o array de inteiros que vai armazenar os dados do arquivo de entrada
     array = (int *) malloc(n * sizeof(int));
     if (array == NULL) {
         printf("Cannot allocate memory");
         exit(1);
     }
 
+    // le os dados do arquivo de entrada e armazena no array
     for (i = 0; i < n; i++) {
         fscanf(fp, "%d", &array[i]);
     }
