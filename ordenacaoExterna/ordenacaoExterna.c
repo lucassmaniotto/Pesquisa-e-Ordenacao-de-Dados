@@ -3,15 +3,19 @@
 #include <stdlib.h>
 #include <string.h>
 
+void cantOpenFile(FILE *fp, char *filename) {
+    if (fp == NULL) {
+        printf("Cannot open %s", filename);
+        exit(1);
+    }
+}
+
 void generateInputFile(char *filename, int n) {
     FILE *fp;
     int i, key;
 
     fp = fopen(filename, "w");
-    if (fp == NULL) {
-        printf("Cannot open %s", filename);
-        exit(1);
-    }
+    cantOpenFile(fp, filename);
 
     for (i = 0; i < n; i++) {
         key = rand() % 100;
@@ -26,10 +30,7 @@ void printFile(char *filename) {
     int key;
 
     fp = fopen(filename, "r");
-    if (fp == NULL) {
-        printf("Cannot open %s", filename);
-        exit(1);
-    }
+    cantOpenFile(fp, filename);
 
     while (fscanf(fp, "%d", &key) != EOF) {
         printf("%d ", key);
@@ -45,10 +46,7 @@ void externalSort(char *filename, int n) {
     int i, j, key, *array;
 
     fp = fopen(filename, "r");
-    if (fp == NULL) {
-        printf("Cannot open %s", filename);
-        exit(1);
-    }
+    cantOpenFile(fp, filename);
 
     array = (int *) malloc(n * sizeof(int));
     if (array == NULL) {
@@ -74,10 +72,7 @@ void externalSort(char *filename, int n) {
     }
 
     fp = fopen(filename, "w");
-    if (fp == NULL) {
-        printf("Cannot open %s", filename);
-        exit(1);
-    }
+    cantOpenFile(fp, filename);
 
     for (i = 0; i < n; i++) {
         fprintf(fp, "%d ", array[i]);
@@ -92,22 +87,13 @@ void intercalate(char *filename1, char *filename2, char *outputfilename, int n) 
     int i, key1, key2;
 
     fp1 = fopen(filename1, "r");
-    if (fp1 == NULL) {
-        printf("Cannot open %s", filename1);
-        exit(1);
-    }
+    cantOpenFile(fp1, filename1);
 
     fp2 = fopen(filename2, "r");
-    if (fp2 == NULL) {
-        printf("Cannot open %s", filename2);
-        exit(1);
-    }
+    cantOpenFile(fp2, filename2);
 
     out = fopen(outputfilename, "w");
-    if (out == NULL) {
-        printf("Cannot open %s", outputfilename);
-        exit(1);
-    }
+    cantOpenFile(out, outputfilename);
 
     fscanf(fp1, "%d", &key1);
     fscanf(fp2, "%d", &key2);
