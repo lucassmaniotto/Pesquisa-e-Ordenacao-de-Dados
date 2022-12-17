@@ -62,12 +62,13 @@ void externalSort(char *filename, int n) {
 
     fclose(fp);
 
-    for (i = 0; i < n - 1; i++) {
-        for (j = i + 1; j < n; j++) {
-            if (array[i] > array[j]) {
-                key = array[i];
-                array[i] = array[j];
-                array[j] = key;
+    //bubble sort
+    for (i = n - 1; i >= 1; i--) {
+        for (j = 0; j < n - 1; j++) {
+            if (array[j] > array[j+1]) {
+                key = array[j];
+                array[j] = array[j+1];
+                array[j+1] = key;
             }
         }
     }
@@ -86,8 +87,8 @@ void externalSort(char *filename, int n) {
     free(array);
 }
 
-void intercalate(char *filename1, char *filename2, char *filename3, int n) {
-    FILE *fp1, *fp2, *fp3;
+void intercalate(char *filename1, char *filename2, char *outputfilename, int n) {
+    FILE *fp1, *fp2, *out;
     int i, key1, key2;
 
     fp1 = fopen(filename1, "r");
@@ -102,9 +103,9 @@ void intercalate(char *filename1, char *filename2, char *filename3, int n) {
         exit(1);
     }
 
-    fp3 = fopen(filename3, "w");
-    if (fp3 == NULL) {
-        printf("Cannot open %s", filename3);
+    out = fopen(outputfilename, "w");
+    if (out == NULL) {
+        printf("Cannot open %s", outputfilename);
         exit(1);
     }
 
@@ -113,44 +114,51 @@ void intercalate(char *filename1, char *filename2, char *filename3, int n) {
 
     for (i = 0; i < n+1; i++) {
         if (key1 < key2) {
-            fprintf(fp3, "%d ", key1);
+            fprintf(out, "%d ", key1);
             fscanf(fp1, "%d", &key1);
             if (feof(fp1)) {
-                fprintf(fp3, "%d ", key2);
+                fprintf(out, "%d ", key2);
                 while (fscanf(fp2, "%d", &key2) != EOF) {
-                    fprintf(fp3, "%d ", key2);
+                    fprintf(out, "%d ", key2);
                 }
                 break;
             }
         } else {
-            fprintf(fp3, "%d ", key2);
+            fprintf(out, "%d ", key2);
             fscanf(fp2, "%d", &key2);
+            if (feof(fp2)) {
+                fprintf(out, "%d ", key1);
+                while (fscanf(fp1, "%d", &key1) != EOF) {
+                    fprintf(out, "%d ", key1);
+                }
+                break;
+            }
         }
     }
 
     fclose(fp1);
     fclose(fp2);
-    fclose(fp3);
+    fclose(out);
 }
 
 int main() {
-    generateInputFile("input.txt", 5);
+    generateInputFile("input.txt", 50);
     printf("Primeiro arquivo: ");
     printFile("input.txt");    
-    externalSort("input.txt", 5);
+    externalSort("input.txt", 50);
     printf("Primeiro arquivo ordenado: ");
     printFile("input.txt");
     printf("\n");
 
     printf("Segundo arquivo: ");
-    generateInputFile("input2.txt", 3);
+    generateInputFile("input2.txt", 30);
     printFile("input2.txt");
-    externalSort("input2.txt", 3);
+    externalSort("input2.txt", 30);
     printf("Segundo arquivo ordenado: ");
     printFile("input2.txt");
     printf("\n");
 
-    intercalate("input.txt", "input2.txt", "output.txt", 8);
+    intercalate("input.txt", "input2.txt", "output.txt", 80);
     printf("Arquivo intercalado: ");
     printFile("output.txt");
 
