@@ -22,7 +22,7 @@ int partition(int *array, int start, int end){
 }
 
 void quickSort(int *array, int start, int end){
-    int pivot = end;
+    int pivot;
     if(start < end){
         pivot = partition(array, start, end);
         quickSort(array, start, pivot - 1);
@@ -31,8 +31,7 @@ void quickSort(int *array, int start, int end){
 }
 
 int main(){
-    int v[10] = {5, 8, 9, 4, 10, 2, 3, 7, 6, 1};
-    
+    int v[10] = {6, 8, 1, 9, 4, 10, 2, 3, 7, 5};
     // vetor inicial
     for(int i = 0; i < 10; i++){
         printf("%d ", v[i]);
