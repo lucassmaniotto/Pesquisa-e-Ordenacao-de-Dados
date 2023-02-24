@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void cantOpenFile(FILE *fp, char *filename) {
+void attemptOpeningFile(FILE *fp, char *filename) {
     if (fp == NULL) {
         printf("Cannot open %s", filename);
         exit(1);
@@ -14,7 +14,7 @@ void generateInputFile(char *filename, int n) {
     int i, key;
 
     fp = fopen(filename, "w");
-    cantOpenFile(fp, filename);
+    attemptOpeningFile(fp, filename);
 
     for (i = 0; i < n; i++) {
         key = rand() % 100;
@@ -29,7 +29,7 @@ void printFile(char *filename) {
     int key;
 
     fp = fopen(filename, "r");
-    cantOpenFile(fp, filename);
+    attemptOpeningFile(fp, filename);
 
     while (fscanf(fp, "%d", &key) != EOF) {
         printf("%d ", key);
@@ -45,7 +45,7 @@ void externalSort(char *filename, int n) {
     int i, j, key, *array;
 
     fp = fopen(filename, "r");
-    cantOpenFile(fp, filename);
+    attemptOpeningFile(fp, filename);
 
     array = (int *) malloc(n * sizeof(int));
     if (array == NULL) {
@@ -71,7 +71,7 @@ void externalSort(char *filename, int n) {
     }
 
     fp = fopen(filename, "w");
-    cantOpenFile(fp, filename);
+    attemptOpeningFile(fp, filename);
 
     for (i = 0; i < n; i++) {
         fprintf(fp, "%d ", array[i]);
@@ -86,13 +86,13 @@ void intercalate(char *filename1, char *filename2, char *outputfilename, int n) 
     int i, key1, key2;
 
     fp1 = fopen(filename1, "r");
-    cantOpenFile(fp1, filename1);
+    attemptOpeningFile(fp1, filename1);
 
     fp2 = fopen(filename2, "r");
-    cantOpenFile(fp2, filename2);
+    attemptOpeningFile(fp2, filename2);
 
     out = fopen(outputfilename, "w");
-    cantOpenFile(out, outputfilename);
+    attemptOpeningFile(out, outputfilename);
 
     fscanf(fp1, "%d", &key1);
     fscanf(fp2, "%d", &key2);
